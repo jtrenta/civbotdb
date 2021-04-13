@@ -1,0 +1,29 @@
+# docker-compose.yml
+
+version: "3.8"
+services:
+  postgres:
+    image: arm64v8/postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports: 
+      - '${DB_PORT}:${DB_PORT}'
+    volumes:
+      - civbot-db:/var/lib/postgresql/data
+
+  civbot:
+    build:
+      context: .
+    environment:
+      DB_SCHEMA: civbot
+      DB_USER: postgres
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: postgres
+    depends_on:
+      - postgres
+    ports:
+      - '${PORT}:${PORT}'
+        
+volumes:
+  civbot-db:

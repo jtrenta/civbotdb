@@ -1,0 +1,19 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Build
+    task:
+      jobs:
+        - name: docker build
+          commands:
+            - checkout
+            - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
+            - 'docker pull "${DOCKER_USERNAME}/civbotdb:latest" || true'
+            - 'docker build --cache-from "${DOCKER_USERNAME}/civbotdb:latest" -t "${DOCKER_USERNAME}/civbotdb:latest" .'
+            - 'docker push "${DOCKER_USERNAME}/civbotdb:latest"'
+      secrets:
+        - name: dockerhub

@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+global.DEVFLAG = false;
+if(process.argv.length > 2) {
+  if(process.argv[2] == 'LOCALDEV') {
+    global.DEVFLAG = true;
+  }
+}
+const logger = require('../log');
+var expressApp = require('../app');
+var client = require('../bot');
+//var debug = require('debug')('civbot:server');
+//var http = require('http');
+//const bodyParser = require("body-parser");
+const cors = require("cors");
+const dbConfig = require('../config/db.config');
+
+console.log = (...args) => logger.info.call(logger, ...args);
+console.info = (...args) => logger.info.call(logger, ...args);
+console.warn = (...args) => logger.warn.call(logger, ...args);
+console.error = (...args) => logger.error.call(logger, ...args);
+console.debug = (...args) => logger.debug.call(logger, ...args);
+
+/**
+ * Get port from environment and store in Express.
+ */
+const CORSPORT = process.env.PORT + 1;
+var corsOptions = {
+  origin: `http://localhost:${CORSPORT}`
+};
+
+expressApp.use(cors(corsOptions));
+
+// // parse requests of content-type - application/json
+// app.use(bodyParser.json());
+
+// // parse requests of content-type - application/x-www-form-urlencoded
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+require("../routes/index.routes")(expressApp);
+require("../routes/player.routes")(expressApp);
+require("../routes/game.routes")(expressApp);
+require("../routes/channel.routes")(expressApp);
+
+// /**
+//  * Event listener for HTTP server "error" event.
+//  */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+//console.log(`All Routes: ${JSON.stringify(app._router.stack)}`);
+const PORT = process.env.PORT || 8080;
+expressApp.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+}).on("error", err => onError(err));
