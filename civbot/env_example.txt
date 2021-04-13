@@ -1,0 +1,26 @@
+#TOKEN is your actual Discord Bot Token
+TOKEN=''
+#DEV_TOKEN is the Discord Bot Token I used for testing
+DEV_TOKEN=''
+#BOTID is the Discord ID of your actual Discord Bot (example '<@123456789012345678>')
+BOTID=''
+#DEV_BOTID is the Discord ID of your testing Discord Bot (example '<@123456789012345678>')
+DEV_BOTID=''
+#DB_PASSWORD is the password for your database server
+DB_PASSWORD=''
+#DB_PORT is the port for your database server
+DB_PORT=
+#PORT is the port your bot will listen for web commands on
+PORT=
+#TEST_USER is the Steam Name of your test user
+TEST_USER=''
+#TEST_USERDISCORDID is the Discord ID of your test user (example '123456789012345678' ie just numbers)
+TEST_USERDISCORDID=''
+#TEST_GUILD is the Discord ID of the Discord Server you want to test on (example '123456789012345678' ie just numbers)
+TEST_GUILD=''
+#TEST_CHANNEL is the Discord ID of the channel on your Discord Server you want to test on (example '123456789012345678' ie just numbers)
+TEST_CHANNEL=''
+#DEBUG_MODE This variable will turn on various debug messages if set to 1
+#DEBUG_MODE !WARNING! If DEBUG_MODE is set to 1, the database will be reset every time the bot is run
+#DEBUG_MODE !WARNING! Do not run your actual bot with DEBUG_MODE set to 1
+DEBUG_MODE=1
